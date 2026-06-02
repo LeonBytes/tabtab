@@ -171,11 +171,6 @@ bgColorOpacity.addEventListener('input', () => { themeSettings.bgOpacity = +bgCo
 bgImageInput.addEventListener('change', () => {
   const file = bgImageInput.files[0];
   if (!file) return;
-  new FileReader().addEventListener && (() => {
-    const fr = new FileReader();
-    fr.onload = e => { themeSettings.bgImage = e.target.result; bgImageThumb.src = themeSettings.bgImage; bgImagePreview.classList.remove('hidden'); applyTheme(themeSettings); };
-    fr.readAsDataURL(file);
-  })();
   const fr = new FileReader();
   fr.onload = e => { themeSettings.bgImage = e.target.result; bgImageThumb.src = themeSettings.bgImage; bgImagePreview.classList.remove('hidden'); applyTheme(themeSettings); };
   fr.readAsDataURL(file);

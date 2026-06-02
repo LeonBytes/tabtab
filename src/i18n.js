@@ -1,6 +1,7 @@
 const I18N = {
   zh: {
     saveBtn: '保存标签页',
+    expandBtn: '全页管理',
     importBtn: '导入',
     exportBtn: '⬇ 导出',
     searchPlaceholder: '🔍 搜索会话...',
@@ -65,6 +66,7 @@ const I18N = {
   },
   en: {
     saveBtn: 'Save Tabs',
+    expandBtn: 'Full Page',
     importBtn: 'Import',
     exportBtn: '⬇ Export',
     searchPlaceholder: '🔍 Search sessions...',
