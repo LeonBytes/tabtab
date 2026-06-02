@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "TabTab - 标签页会话管理器",
-  "version": "1.6.0",
-  "description": "保存和恢复你的浏览器标签页会话，支持命名、分类管理",
+  "name": "TabTab - Tab Session Manager",
+  "version": "1.6.1",
+  "description": "Save, name, and restore browser tab sessions with local-only storage",
   "permissions": [
     "tabs",
     "storage",
