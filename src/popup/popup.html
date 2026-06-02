@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TabVault</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="custom-bg"></div>
+
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">🗂️</span>
+        <span class="logo-text">TabVault</span>
+      </div>
+      <div class="header-actions">
+        <button id="btn-fullpage" class="btn btn-ghost btn-sm" title="全页管理">📋</button>
+        <button id="btn-import" class="btn btn-ghost btn-sm">⬆ <span id="t-import">导入</span></button>
+        <button id="btn-settings" class="btn-icon" title="设置">⚙️</button>
+        <button id="btn-save" class="btn btn-primary btn-sm">💾 <span id="t-save">保存标签页</span></button>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <!-- 保存面板 -->
+      <div id="save-panel" class="panel hidden">
+        <div class="panel-header">
+          <h3 id="t-savePanelTitle">保存会话</h3>
+          <button id="btn-cancel-save" class="btn-icon">✕</button>
+        </div>
+        <div class="form-group">
+          <label id="t-sessionNameLabel">会话名称</label>
+          <input id="session-name" type="text" class="input" placeholder="例如：学习雅思..." />
+        </div>
+        <div class="form-group">
+          <label><span id="t-tabsLabel">选择标签页</span> <span id="tab-count" class="badge">0</span></label>
+          <div class="tab-list-header">
+            <label class="checkbox-label">
+              <input type="checkbox" id="select-all" checked />
+              <span id="t-selectAll">全选</span>
+            </label>
+          </div>
+          <div id="current-tabs-list" class="tab-list"></div>
+        </div>
+        <div class="panel-footer">
+          <button id="btn-confirm-save" class="btn btn-primary btn-full">确认保存</button>
+        </div>
+      </div>
+
+      <!-- 设置面板 -->
+      <div id="settings-panel" class="panel hidden">
+        <div class="panel-header">
+          <h3 id="t-settingsTitle">⚙️ 设置</h3>
+          <button id="btn-close-settings" class="btn-icon">✕</button>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-label" id="t-themeSection">主题预设</div>
+          <div class="theme-presets">
+            <button class="theme-preset active" data-theme="dark">
+              <div class="theme-thumb theme-thumb--dark"></div>
+              <span id="t-themeDark">🌙 深色</span>
+            </button>
+            <button class="theme-preset" data-theme="light">
+              <div class="theme-thumb theme-thumb--light"></div>
+              <span id="t-themeLight">☀️ 浅色</span>
+            </button>
+            <button class="theme-preset" data-theme="green">
+              <div class="theme-thumb theme-thumb--green"></div>
+              <span id="t-themeGreen">🌿 护眼绿</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-label" id="t-bgSection">自定义背景</div>
+          <div class="bg-mode-tabs">
+            <button class="bg-mode-btn active" data-mode="color"><span id="t-bgColorMode">🎨 颜色</span></button>
+            <button class="bg-mode-btn" data-mode="image"><span id="t-bgImageMode">🖼 图片</span></button>
+          </div>
+          <div id="bg-color-section" class="bg-section">
+            <div class="color-row">
+              <label class="settings-sublabel" id="t-bgColorLabel">背景颜色</label>
+              <input type="color" id="bg-color-picker" value="#0f0f13" class="color-picker" />
+            </div>
+            <label class="settings-sublabel"><span id="t-opacityLabel">透明度</span> <span id="color-opacity-val">100%</span></label>
+            <input type="range" id="bg-color-opacity" class="slider" min="0" max="100" value="100" />
+          </div>
+          <div id="bg-image-section" class="bg-section hidden">
+            <label class="upload-btn" for="bg-image-input">
+              <span id="t-chooseImage">📁 选择本地图片</span>
+              <input type="file" id="bg-image-input" accept="image/*" class="hidden" />
+            </label>
+            <div id="bg-image-preview" class="bg-image-preview hidden">
+              <img id="bg-image-thumb" src="" alt="背景预览" />
+              <button id="btn-remove-image" class="btn-remove-image">✕ 移除</button>
+            </div>
+            <label class="settings-sublabel"><span id="t-imgOpacityLabel">透明度</span> <span id="image-opacity-val">80%</span></label>
+            <input type="range" id="bg-image-opacity" class="slider" min="0" max="100" value="80" />
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-label">语言 / Language</div>
+          <div class="lang-options">
+            <button class="lang-btn active" data-lang="zh">🇨🇳 中文</button>
+            <button class="lang-btn" data-lang="en">🇺🇸 English</button>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <button id="btn-save-settings" class="btn btn-primary btn-full">保存设置</button>
+        </div>
+      </div>
+
+      <!-- 会话列表 -->
+      <div id="sessions-view">
+        <div class="search-bar">
+          <input id="search-input" type="text" class="input" placeholder="🔍 搜索会话..." />
+          <button id="btn-export" class="btn btn-ghost btn-sm">⬇ 导出</button>
+        </div>
+        <div id="sessions-list" class="sessions-list"></div>
+        <div id="empty-state" class="empty-state hidden">
+          <div class="empty-icon">📂</div>
+          <p class="empty-title" id="t-emptyTitle">还没有保存的会话</p>
+          <p class="empty-desc" id="t-emptyDesc">点击「保存标签页」开始记录你的浏览状态</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- 删除确认弹窗 -->
+  <div id="confirm-modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box">
+      <p id="t-deleteConfirm">确定要删除这个会话吗？</p>
+      <div class="modal-actions">
+        <button id="modal-cancel" class="btn btn-ghost">取消</button>
+        <button id="modal-confirm" class="btn btn-danger">删除</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 分享弹窗 -->
+  <div id="share-modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box modal-box--wide">
+      <div class="modal-header">
+        <h3 id="share-title">分享会话</h3>
+        <button id="share-close" class="btn-icon">✕</button>
+      </div>
+      <p class="share-desc" id="t-shareDesc">将以下「分享码」发送给对方，对方在 TabVault 中点击「导入」粘贴即可一键还原所有标签页。</p>
+      <div class="share-urls" id="share-urls-list"></div>
+      <textarea id="share-code" class="share-code" readonly></textarea>
+      <div class="modal-actions">
+        <button id="btn-copy-code" class="btn btn-primary">📋 复制分享码</button>
+        <button id="btn-copy-urls" class="btn btn-ghost">🔗 复制链接列表</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 导入弹窗 -->
+  <div id="import-modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box modal-box--wide">
+      <div class="modal-header">
+        <h3 id="t-importTitle">导入会话</h3>
+        <button id="import-close" class="btn-icon">✕</button>
+      </div>
+      <p class="share-desc" id="t-importDesc">粘贴分享码，或从本地 JSON 备份文件导入。</p>
+      <textarea id="import-code" class="share-code" placeholder="在此粘贴分享码..."></textarea>
+      <div id="import-error" class="import-error hidden">无效的分享码或文件，请检查后重试</div>
+      <div class="modal-actions modal-actions--col">
+        <button id="btn-do-import" class="btn btn-primary btn-full">⬆ 导入</button>
+        <label class="btn btn-ghost btn-full" for="import-file-input" style="justify-content:center;cursor:pointer;">
+          <span id="t-importFromFile">📁 从本地文件导入</span>
+          <input type="file" id="import-file-input" accept=".json" class="hidden" />
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <script src="../i18n.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

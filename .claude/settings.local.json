@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"/Users/leon/vscode projects/webpage manager/.claude\")",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}

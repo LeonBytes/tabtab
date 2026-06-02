@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "TabVault - 标签页会话管理器",
+  "version": "1.0.0",
+  "description": "保存和恢复你的浏览器标签页会话，支持命名、分类管理",
+  "permissions": [
+    "tabs",
+    "storage",
+    "windows"
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  }
+}
