@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TabVault — 全页管理</title>
+  <title>TabTab</title>
   <link rel="stylesheet" href="fullpage.css" />
 </head>
 <body>
@@ -11,115 +11,255 @@
 
   <div class="fp-app">
 
-    <!-- 顶部导航 -->
+    <!-- Header -->
     <header class="fp-header">
       <div class="fp-logo">
         <span class="fp-logo-icon">🗂️</span>
-        <span class="fp-logo-text">TabVault</span>
+        <span class="fp-logo-text">TabTab</span>
         <div class="fp-stats">
-          <span id="fp-stat-sessions">0 个会话</span>
+          <span id="fp-stat-sessions"></span>
           <span class="fp-stat-dot">·</span>
-          <span id="fp-stat-tabs">0 个标签页</span>
+          <span id="fp-stat-tabs"></span>
         </div>
       </div>
       <div class="fp-header-center">
-        <input id="fp-search" type="text" class="fp-search-input" placeholder="🔍 搜索会话..." />
+        <input id="fp-search" type="text" class="fp-search-input" />
       </div>
       <div class="fp-header-right">
-        <button id="fp-btn-import" class="fp-btn fp-btn-ghost">⬆ 导入</button>
-        <button id="fp-btn-export" class="fp-btn fp-btn-ghost">⬇ 导出</button>
-        <button id="fp-btn-new" class="fp-btn fp-btn-primary">+ 新建会话</button>
+        <button id="fp-btn-import" class="fp-btn fp-btn-ghost"></button>
+        <button id="fp-btn-export" class="fp-btn fp-btn-ghost"></button>
+        <button id="fp-btn-settings" class="fp-icon-btn fp-settings-btn" title="设置">⚙️</button>
+        <button id="fp-btn-new" class="fp-btn fp-btn-primary"></button>
+        <button id="fp-btn-collapse" class="fp-btn fp-btn-close-rect">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/>
+          </svg>
+          <span id="fp-collapse-label">关闭</span>
+        </button>
       </div>
     </header>
 
-    <!-- 主体：侧边栏 + 详情区 -->
+    <!-- Body -->
     <div class="fp-body">
 
-      <!-- 侧边栏 -->
+      <!-- Sidebar -->
       <aside class="fp-sidebar">
         <div class="fp-sidebar-header">
-          <span id="fp-sidebar-title" class="fp-sidebar-title">全部会话</span>
+          <span id="fp-sidebar-title" class="fp-sidebar-title"></span>
           <span id="fp-session-count" class="fp-count-badge">0</span>
         </div>
         <div id="fp-session-list" class="fp-session-list"></div>
       </aside>
 
-      <!-- 详情区 -->
+      <!-- Main: three mutually-exclusive views -->
       <main class="fp-main">
+
+        <!-- ① Empty state -->
         <div id="fp-empty-detail" class="fp-empty-detail">
           <div class="fp-empty-icon">🗂️</div>
-          <p id="fp-empty-hint">← 从左侧选择一个会话</p>
+          <p id="fp-empty-hint"></p>
         </div>
 
+        <!-- ② Session detail -->
         <div id="fp-detail" class="fp-detail hidden">
           <div class="fp-detail-header">
             <div class="fp-detail-title-row">
               <h2 id="fp-detail-name" class="fp-detail-name"></h2>
-              <button id="fp-btn-rename" class="fp-icon-btn" title="重命名">✏️</button>
+              <button id="fp-btn-rename" class="fp-icon-btn" title="✏️">✏️</button>
             </div>
-            <div class="fp-detail-meta" id="fp-detail-meta"></div>
+            <div id="fp-detail-meta" class="fp-detail-meta"></div>
             <div class="fp-detail-actions">
-              <button id="fp-btn-restore" class="fp-btn fp-btn-primary">▶ 恢复全部</button>
-              <button id="fp-btn-share" class="fp-btn fp-btn-ghost">🔗 分享</button>
-              <button id="fp-btn-delete" class="fp-btn fp-btn-danger">🗑 删除</button>
+              <button id="fp-btn-restore" class="fp-btn fp-btn-primary"></button>
+              <button id="fp-btn-add-tabs" class="fp-btn fp-btn-ghost"></button>
+              <button id="fp-btn-share" class="fp-btn fp-btn-ghost"></button>
+              <div class="fp-layout-switcher" id="fp-layout-switcher">
+                <!-- Grid -->
+                <button class="fp-layout-btn active" data-layout="grid" title="平铺">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                    <rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/>
+                    <rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/>
+                  </svg>
+                </button>
+                <!-- Compact -->
+                <button class="fp-layout-btn" data-layout="compact" title="紧凑">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                    <rect x="0" y="0" width="3" height="3" rx="0.5"/><rect x="4" y="0" width="3" height="3" rx="0.5"/><rect x="8" y="0" width="3" height="3" rx="0.5"/><rect x="12" y="0" width="3" height="3" rx="0.5"/>
+                    <rect x="0" y="4" width="3" height="3" rx="0.5"/><rect x="4" y="4" width="3" height="3" rx="0.5"/><rect x="8" y="4" width="3" height="3" rx="0.5"/><rect x="12" y="4" width="3" height="3" rx="0.5"/>
+                    <rect x="0" y="8" width="3" height="3" rx="0.5"/><rect x="4" y="8" width="3" height="3" rx="0.5"/><rect x="8" y="8" width="3" height="3" rx="0.5"/><rect x="12" y="8" width="3" height="3" rx="0.5"/>
+                  </svg>
+                </button>
+                <!-- List -->
+                <button class="fp-layout-btn" data-layout="list" title="列表">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                    <rect x="0" y="1" width="14" height="2.5" rx="1"/>
+                    <rect x="0" y="5.75" width="14" height="2.5" rx="1"/>
+                    <rect x="0" y="10.5" width="14" height="2.5" rx="1"/>
+                  </svg>
+                </button>
+              </div>
+              <button id="fp-btn-delete" class="fp-btn fp-btn-danger"></button>
             </div>
           </div>
-
           <div id="fp-tabs-grid" class="fp-tabs-grid"></div>
         </div>
-      </main>
 
+        <!-- ③ Inline save tabs view -->
+        <div id="fp-save-view" class="fp-save-view hidden">
+          <div class="fp-save-view-header">
+            <h2 id="fp-save-view-title" class="fp-save-view-title"></h2>
+            <button id="fp-save-view-cancel" class="fp-btn fp-btn-ghost"></button>
+          </div>
+          <div class="fp-save-view-body">
+            <div class="fp-form-group">
+              <label id="fp-sv-name-label" class="fp-label"></label>
+              <input id="fp-session-name" type="text" class="fp-input" />
+            </div>
+            <div class="fp-form-group">
+              <div class="fp-tabs-label-row">
+                <label class="fp-label"><span id="fp-sv-tabs-label"></span> <span id="fp-tab-count" class="fp-badge">0</span></label>
+                <label class="fp-checkbox-label">
+                  <input type="checkbox" id="fp-select-all" checked />
+                  <span id="fp-sv-select-all"></span>
+                </label>
+              </div>
+              <div id="fp-current-tabs" class="fp-tab-checklist"></div>
+            </div>
+            <button id="fp-save-confirm" class="fp-btn fp-btn-primary fp-btn-full"></button>
+          </div>
+        </div>
+
+      </main>
     </div>
   </div>
 
-  <!-- 删除确认 -->
+  <!-- ① Delete session confirm -->
   <div id="fp-confirm-modal" class="fp-modal hidden">
     <div class="fp-modal-backdrop"></div>
     <div class="fp-modal-box">
-      <p id="fp-confirm-text">确定要删除这个会话吗？</p>
+      <p id="fp-confirm-text"></p>
       <div class="fp-modal-actions">
-        <button id="fp-modal-cancel" class="fp-btn fp-btn-ghost">取消</button>
-        <button id="fp-modal-confirm" class="fp-btn fp-btn-danger">删除</button>
+        <button id="fp-modal-cancel" class="fp-btn fp-btn-ghost"></button>
+        <button id="fp-modal-confirm" class="fp-btn fp-btn-danger"></button>
       </div>
     </div>
   </div>
 
-  <!-- 分享弹窗 -->
+  <!-- ② Add tabs modal -->
+  <div id="fp-add-modal" class="fp-modal hidden">
+    <div class="fp-modal-backdrop"></div>
+    <div class="fp-modal-box fp-modal-box--wide">
+      <div class="fp-modal-header">
+        <h3 id="fp-add-modal-title"></h3>
+        <button id="fp-add-close" class="fp-icon-btn">✕</button>
+      </div>
+      <p id="fp-add-modal-desc" class="fp-modal-desc"></p>
+      <div id="fp-add-tabs-list" class="fp-tab-checklist fp-add-list"></div>
+      <div id="fp-add-empty" class="fp-add-empty hidden"></div>
+      <div class="fp-modal-actions">
+        <button id="fp-add-confirm" class="fp-btn fp-btn-primary" style="flex:1;justify-content:center"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ Share modal -->
   <div id="fp-share-modal" class="fp-modal hidden">
     <div class="fp-modal-backdrop"></div>
     <div class="fp-modal-box fp-modal-box--wide">
       <div class="fp-modal-header">
-        <h3 id="fp-share-title">分享会话</h3>
+        <h3 id="fp-share-title"></h3>
         <button id="fp-share-close" class="fp-icon-btn">✕</button>
       </div>
-      <p class="fp-modal-desc">将以下「分享码」发送给对方，对方在 TabVault 点击「导入」粘贴即可一键还原所有标签页。</p>
+      <p id="fp-share-desc" class="fp-modal-desc"></p>
       <div id="fp-share-urls" class="fp-share-urls"></div>
       <textarea id="fp-share-code" class="fp-share-code" readonly></textarea>
       <div class="fp-modal-actions">
-        <button id="fp-copy-code" class="fp-btn fp-btn-primary">📋 复制分享码</button>
-        <button id="fp-copy-urls" class="fp-btn fp-btn-ghost">🔗 复制链接列表</button>
+        <button id="fp-copy-code" class="fp-btn fp-btn-primary"></button>
+        <button id="fp-copy-urls" class="fp-btn fp-btn-ghost"></button>
       </div>
     </div>
   </div>
 
-  <!-- 导入弹窗 -->
+  <!-- ④ Import modal -->
   <div id="fp-import-modal" class="fp-modal hidden">
     <div class="fp-modal-backdrop"></div>
     <div class="fp-modal-box fp-modal-box--wide">
       <div class="fp-modal-header">
-        <h3>导入会话</h3>
+        <h3 id="fp-import-title"></h3>
         <button id="fp-import-close" class="fp-icon-btn">✕</button>
       </div>
-      <p class="fp-modal-desc">粘贴分享码，或从本地 JSON 备份文件导入。</p>
-      <textarea id="fp-import-code" class="fp-share-code" placeholder="在此粘贴分享码..."></textarea>
-      <div id="fp-import-error" class="fp-import-error hidden">无效的分享码或文件，请检查后重试</div>
-      <div class="fp-modal-actions fp-modal-actions--col">
-        <button id="fp-do-import" class="fp-btn fp-btn-primary" style="flex:1">⬆ 导入分享码</button>
-        <label class="fp-btn fp-btn-ghost" for="fp-import-file" style="flex:1;justify-content:center;cursor:pointer;">
-          📁 从本地文件导入
+      <p id="fp-import-desc" class="fp-modal-desc"></p>
+      <textarea id="fp-import-code" class="fp-share-code"></textarea>
+      <div id="fp-import-error" class="fp-import-error hidden"></div>
+      <div class="fp-modal-actions">
+        <button id="fp-do-import" class="fp-btn fp-btn-primary" style="flex:1;justify-content:center"></button>
+        <label class="fp-btn fp-btn-ghost" for="fp-import-file" style="flex:1;justify-content:center;cursor:pointer">
+          <span id="fp-import-file-label"></span>
           <input type="file" id="fp-import-file" accept=".json" class="fp-hidden" />
         </label>
       </div>
+    </div>
+  </div>
+
+  <!-- ⑤ Settings modal -->
+  <div id="fp-settings-modal" class="fp-modal hidden">
+    <div class="fp-modal-backdrop"></div>
+    <div class="fp-modal-box fp-modal-box--settings">
+      <div class="fp-modal-header">
+        <h3 id="fp-settings-title"></h3>
+        <button id="fp-settings-close" class="fp-icon-btn">✕</button>
+      </div>
+      <div class="fp-settings-section">
+        <div id="fp-theme-section-label" class="fp-settings-label"></div>
+        <div class="fp-theme-presets">
+          <button class="fp-theme-preset active" data-theme="dark">
+            <div class="fp-theme-thumb fp-thumb--dark"></div>
+            <span id="fp-theme-dark-label"></span>
+          </button>
+          <button class="fp-theme-preset" data-theme="light">
+            <div class="fp-theme-thumb fp-thumb--light"></div>
+            <span id="fp-theme-light-label"></span>
+          </button>
+          <button class="fp-theme-preset" data-theme="green">
+            <div class="fp-theme-thumb fp-thumb--green"></div>
+            <span id="fp-theme-green-label"></span>
+          </button>
+        </div>
+      </div>
+      <div class="fp-settings-section">
+        <div id="fp-bg-section-label" class="fp-settings-label"></div>
+        <div class="fp-bg-mode-tabs">
+          <button class="fp-bg-mode-btn active" data-mode="color"><span id="fp-bg-color-mode-label"></span></button>
+          <button class="fp-bg-mode-btn" data-mode="image"><span id="fp-bg-image-mode-label"></span></button>
+        </div>
+        <div id="fp-bg-color-section" class="fp-bg-section">
+          <div class="fp-color-row">
+            <span id="fp-bg-color-label" class="fp-settings-sublabel"></span>
+            <input type="color" id="fp-bg-color" value="#0f0f13" class="fp-color-picker" />
+          </div>
+          <div class="fp-settings-sublabel"><span id="fp-opacity-label"></span> <span id="fp-color-opacity-val">100%</span></div>
+          <input type="range" id="fp-bg-color-opacity" class="fp-slider" min="0" max="100" value="100" />
+        </div>
+        <div id="fp-bg-image-section" class="fp-bg-section hidden">
+          <label class="fp-upload-btn" for="fp-bg-image-input">
+            <span id="fp-choose-image-label"></span>
+            <input type="file" id="fp-bg-image-input" accept="image/*" class="fp-hidden" />
+          </label>
+          <div id="fp-bg-img-preview" class="fp-img-preview hidden">
+            <img id="fp-bg-img-thumb" src="" alt="" />
+            <button id="fp-remove-image" class="fp-remove-btn"></button>
+          </div>
+          <div class="fp-settings-sublabel"><span id="fp-img-opacity-label"></span> <span id="fp-image-opacity-val">80%</span></div>
+          <input type="range" id="fp-bg-image-opacity" class="fp-slider" min="0" max="100" value="80" />
+        </div>
+      </div>
+      <div class="fp-settings-section">
+        <div class="fp-settings-label" id="fp-lang-section-label"></div>
+        <div class="fp-lang-options">
+          <button class="fp-lang-btn active" data-lang="zh">🇨🇳 中文</button>
+          <button class="fp-lang-btn" data-lang="en">🇺🇸 English</button>
+        </div>
+      </div>
+      <button id="fp-settings-save" class="fp-btn fp-btn-primary" style="width:100%;justify-content:center"></button>
     </div>
   </div>
 

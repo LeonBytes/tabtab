@@ -184,6 +184,7 @@ btnRemoveImage.addEventListener('click', () => { themeSettings.bgImage = ''; bgI
 bgImageOpacity.addEventListener('input', () => { themeSettings.bgOpacity = +bgImageOpacity.value; imageOpacityVal.textContent = themeSettings.bgOpacity + '%'; applyTheme(themeSettings); });
 document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => {
   themeSettings.lang = btn.dataset.lang;
+  t = createT(themeSettings.lang);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b === btn));
   applyTranslations();
   renderSessions(searchInput.value);

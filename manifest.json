@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "TabVault - 标签页会话管理器",
+  "name": "TabTab - 标签页会话管理器",
   "version": "1.0.0",
   "description": "保存和恢复你的浏览器标签页会话，支持命名、分类管理",
   "permissions": [

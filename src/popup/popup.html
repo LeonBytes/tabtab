@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TabVault</title>
+  <title>TabTab</title>
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
@@ -13,10 +13,14 @@
     <header class="header">
       <div class="logo">
         <span class="logo-icon">🗂️</span>
-        <span class="logo-text">TabVault</span>
+        <span class="logo-text">TabTab</span>
       </div>
       <div class="header-actions">
-        <button id="btn-fullpage" class="btn btn-ghost btn-sm" title="全页管理">📋</button>
+        <button id="btn-fullpage" class="btn-icon btn-expand" title="全页管理">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8.5 1H13V5.5"/><path d="M5.5 13H1V8.5"/><path d="M13 1L8 6"/><path d="M1 13L6 8"/>
+          </svg>
+        </button>
         <button id="btn-import" class="btn btn-ghost btn-sm">⬆ <span id="t-import">导入</span></button>
         <button id="btn-settings" class="btn-icon" title="设置">⚙️</button>
         <button id="btn-save" class="btn btn-primary btn-sm">💾 <span id="t-save">保存标签页</span></button>
@@ -153,7 +157,7 @@
         <h3 id="share-title">分享会话</h3>
         <button id="share-close" class="btn-icon">✕</button>
       </div>
-      <p class="share-desc" id="t-shareDesc">将以下「分享码」发送给对方，对方在 TabVault 中点击「导入」粘贴即可一键还原所有标签页。</p>
+      <p class="share-desc" id="t-shareDesc">将以下「分享码」发送给对方，对方在 TabTab 中点击「导入」粘贴即可一键还原所有标签页。</p>
       <div class="share-urls" id="share-urls-list"></div>
       <textarea id="share-code" class="share-code" readonly></textarea>
       <div class="modal-actions">

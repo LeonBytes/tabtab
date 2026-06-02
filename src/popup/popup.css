@@ -125,6 +125,13 @@ body {
 }
 .btn-icon:hover { background: rgba(var(--bg-hover-rgb), 0.8); color: var(--text); }
 
+.btn-expand {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; padding: 0;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.btn-expand:hover { border-color: var(--primary); color: var(--primary); }
+
 /* ─── Main ────────────────────────────────────────────────────────────────── */
 .main { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
 
