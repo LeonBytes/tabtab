@@ -1,4 +1,4 @@
-# TabTab
+# TabEcho
 
 > Save, name, and restore your browser tab sessions.
 
@@ -8,7 +8,7 @@
 
 ## English
 
-TabTab is a Chrome extension for saving groups of browser tabs as named sessions. It helps you quickly restore workspaces for studying, coding, research, entertainment, or any recurring browsing context.
+TabEcho is a Chrome extension for saving groups of browser tabs as named sessions. It helps you quickly restore workspaces for studying, coding, research, entertainment, or any recurring browsing context.
 
 ### Features
 
@@ -84,7 +84,7 @@ webpage manager/
 
 ### Data Storage
 
-Session data is stored locally with `chrome.storage.local`. TabTab does not upload your sessions to any server and works fully offline.
+Session data is stored locally with `chrome.storage.local`. TabEcho does not upload your sessions to any server and works fully offline.
 
 ### Roadmap
 
@@ -98,7 +98,7 @@ Session data is stored locally with `chrome.storage.local`. TabTab does not uplo
 
 ## 中文
 
-TabTab 是一个 Chrome 标签页会话管理扩展，可以一键保存、命名、恢复你的浏览器标签页组合，适合学习、编程、资料检索、娱乐等反复切换的浏览场景。
+TabEcho 是一个 Chrome 标签页会话管理扩展，可以一键保存、命名、恢复你的浏览器标签页组合，适合学习、编程、资料检索、娱乐等反复切换的浏览场景。
 
 ### 功能特性
 

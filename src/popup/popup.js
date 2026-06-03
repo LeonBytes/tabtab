@@ -313,13 +313,14 @@ function exportSessions() {
   if (!sessions.length) return;
   const a = Object.assign(document.createElement('a'), {
     href: URL.createObjectURL(new Blob([JSON.stringify({exportedAt:new Date().toISOString(),sessions},null,2)],{type:'application/json'})),
-    download: `tabvault-backup-${new Date().toISOString().slice(0,10)}.json`
+    download: `tabecho-backup-${new Date().toISOString().slice(0,10)}.json`
   });
   a.click(); URL.revokeObjectURL(a.href);
 }
 
 // ─── Share ────────────────────────────────────────────────────────────────────
-const SHARE_PREFIX = 'TABVAULT_SHARE_V1:';
+const SHARE_PREFIX = 'TABECHO_SHARE_V1:';
+const LEGACY_SHARE_PREFIX = 'TABVAULT_SHARE_V1:';
 function openShareModal(id) {
   sharingSession = sessions.find(s=>s.id===id);
   if (!sharingSession) return;
@@ -342,9 +343,10 @@ function closeImportModal() { importModal.classList.add('hidden'); }
 
 async function doImportFromCode(raw) {
   importError.classList.add('hidden');
-  if (!raw.startsWith(SHARE_PREFIX)) { importError.classList.remove('hidden'); return false; }
+  const prefix = raw.startsWith(SHARE_PREFIX) ? SHARE_PREFIX : raw.startsWith(LEGACY_SHARE_PREFIX) ? LEGACY_SHARE_PREFIX : null;
+  if (!prefix) { importError.classList.remove('hidden'); return false; }
   try {
-    const json = decodeURIComponent(escape(atob(raw.slice(SHARE_PREFIX.length))));
+    const json = decodeURIComponent(escape(atob(raw.slice(prefix.length))));
     const { name, tabs } = JSON.parse(json);
     if (!name || !Array.isArray(tabs)) throw new Error();
     sessions.push({ id: Date.now().toString(), name, tabs, createdAt: new Date().toISOString() });

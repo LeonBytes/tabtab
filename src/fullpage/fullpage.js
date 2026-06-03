@@ -574,7 +574,8 @@ $('fp-btn-collapse').addEventListener('click', () => {
 });
 
 // ─── Share ────────────────────────────────────────────────────────────────────
-const SHARE_PREFIX = 'TABVAULT_SHARE_V1:';
+const SHARE_PREFIX = 'TABECHO_SHARE_V1:';
+const LEGACY_SHARE_PREFIX = 'TABVAULT_SHARE_V1:';
 $('fp-btn-share').addEventListener('click', () => {
   const session = sessions.find(s => s.id === selectedId); if (!session) return;
   sharingSession = session;
@@ -602,7 +603,7 @@ $('fp-btn-export').addEventListener('click', () => {
   if (!sessions.length) return;
   const a = Object.assign(document.createElement('a'), {
     href: URL.createObjectURL(new Blob([JSON.stringify({exportedAt:new Date().toISOString(),sessions},null,2)],{type:'application/json'})),
-    download: `tabvault-backup-${new Date().toISOString().slice(0,10)}.json`
+    download: `tabecho-backup-${new Date().toISOString().slice(0,10)}.json`
   });
   a.click(); URL.revokeObjectURL(a.href);
 });
@@ -616,9 +617,10 @@ $('fp-import-close').addEventListener('click', () => $('fp-import-modal').classL
 $('fp-import-modal').querySelector('.fp-modal-backdrop').addEventListener('click', () => $('fp-import-modal').classList.add('hidden'));
 $('fp-do-import').addEventListener('click', async () => {
   const raw = $('fp-import-code').value.trim(); $('fp-import-error').classList.add('hidden');
-  if (!raw.startsWith(SHARE_PREFIX)) { $('fp-import-error').classList.remove('hidden'); return; }
+  const prefix = raw.startsWith(SHARE_PREFIX) ? SHARE_PREFIX : raw.startsWith(LEGACY_SHARE_PREFIX) ? LEGACY_SHARE_PREFIX : null;
+  if (!prefix) { $('fp-import-error').classList.remove('hidden'); return; }
   try {
-    const { name, tabs } = JSON.parse(decodeURIComponent(escape(atob(raw.slice(SHARE_PREFIX.length)))));
+    const { name, tabs } = JSON.parse(decodeURIComponent(escape(atob(raw.slice(prefix.length)))));
     if (!name || !Array.isArray(tabs)) throw new Error();
     const s = { id: Date.now().toString(), name, tabs, createdAt: new Date().toISOString() };
     sessions.push(s); await saveSessions();
