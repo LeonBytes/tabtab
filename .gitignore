@@ -2,6 +2,7 @@
 *.local
 *.zip
 icons8-tab-100.png
+browser.png
 store-assets/
 截屏*.png
 node_modules/
